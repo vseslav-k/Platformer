@@ -3,7 +3,7 @@
 // Left and right: A D
 // Jump: Space
 // Attack: Left click (Vee you can decide this one since ur making the enemy level)
-
+import slash from './slash.js';
 export default class Knight extends Phaser.Physics.Arcade.Sprite {
 
     constructor(scene, x, y) {
@@ -21,12 +21,14 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
         this.coyoteTimeCounter = 0; //ms
         this.coinCount = 0;
         this.deathsCount = 0;
+        this.attacking = false;
 
         // CONTROLS
         this.keys = scene.input.keyboard.addKeys({
             left: Phaser.Input.Keyboard.KeyCodes.A,
             right: Phaser.Input.Keyboard.KeyCodes.D,
-            jump: Phaser.Input.Keyboard.KeyCodes.SPACE
+            jump: Phaser.Input.Keyboard.KeyCodes.SPACE,
+            attack: Phaser.Input.Keyboard.KeyCodes.J
         });
 
         this.body.setSize(10, 20, true);
@@ -90,6 +92,7 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
     }
 
     preUpdate(time, delta) {
+        super.preUpdate(time, delta);
         if(this.onGround){ this.coyoteTimeCounter = 0;}
         else{this.coyoteTimeCounter += delta;}
         
@@ -122,6 +125,11 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
         if (!this.onGround && (this.body.blocked.left || this.body.blocked.right)) {
             this.setAccelerationX(0);
             this.setVelocityX(0);
+        }
+
+        if (Phaser.Input.Keyboard.JustDown(this.keys.attack) && !this.attacking) {
+            this.attacking = true;
+            new slash(this.scene, this, 10, 0, this.scene.enemies);
         }
 
         this.emitDustIfMoving();

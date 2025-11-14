@@ -21,6 +21,10 @@ export default class Start extends Phaser.Scene {
         this.load.spritesheet('coin', 'assets/sprites/coin.png', {
             frameWidth: 16, frameHeight: 16
         });
+        this.load.spritesheet('slash', 'assets/sprites/slash.png', {
+            frameWidth: 64, frameHeight: 47
+        });
+        this.load.image('slime', 'assets/sprites/slimeSingle.png'); 
 
         // SOUNDS (deal with later) 
         

@@ -43,6 +43,7 @@ export default class StartEnemyLevel extends Phaser.Scene {
         this.cameras.main.setZoom(1.5);
         
         this.updatables = [];
+        this.enemies = [];
         this.instantiateGameObjectsFromLayer(map);
 
 
