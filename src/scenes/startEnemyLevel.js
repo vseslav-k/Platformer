@@ -11,7 +11,7 @@ export default class StartEnemyLevel extends Phaser.Scene {
 
   create() {
         this.player = new Knight(this, 64, 700);
-
+        this.timeTaken = 0;
         this.coinCount = 0;
         const map = this.make.tilemap({ key: "StartEnemyLevel" });
         const tileset = map.addTilesetImage("world_tileset", "world_tileset");
@@ -53,6 +53,7 @@ export default class StartEnemyLevel extends Phaser.Scene {
       this.add.text(16,8,"You won!",{fontSize:20,color:'#ffffffff'});
       this.add.text(16,30,`You gathered ${this.player.coinCount} / ${this.coinCount} coins!`,{fontSize:20,color:'#ffffffff'});
       this.add.text(16,52,`You died ${this.player.deathsCount} times!`,{fontSize:20,color:'#ffffffff'});
+      this.add.text(16,74,`Time taken: ${(this.timeTaken / 1000).toFixed(2)} seconds`,{fontSize:20,color:'#ffffffff'});
       this.time.delayedCall(5000, () => {
         this.scene.start('Start');
       }, [], this);
@@ -94,8 +95,9 @@ export default class StartEnemyLevel extends Phaser.Scene {
      }
    }
 
-    update() {
+    update(time, delta) {
       this.updatables.forEach(updatable => updatable.update());
+      this.timeTaken += delta;
         
     }
   

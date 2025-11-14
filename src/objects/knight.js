@@ -35,7 +35,7 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
     }
     die(){
         this.deathsCount++;
-        //this.setPosition(this.spawnPoint.x, this.spawnPoint.y);
+        this.setPosition(this.spawnPoint.x, this.spawnPoint.y);
     }
 
     createDustEmitter() {

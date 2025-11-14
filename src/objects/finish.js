@@ -6,10 +6,13 @@ export default class finish{
         this.y = y;
         this.len = len;
         this.width = width;
+        this.gameEnded = false;
     }
 
 
     endGame(){
+        if(this.gameEnded) return;
+        this.gameEnded = true;
         console.log("You win!");
         this.scene.endGame();
     }
