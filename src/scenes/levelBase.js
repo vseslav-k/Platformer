@@ -14,41 +14,41 @@ export default class LevelBase extends Phaser.Scene {
         // Tilesets (match the Tileset NAMES in Tiled)
         const tsWorld = map.addTilesetImage('world_tileset', 'world_tileset');
 
-        // Detect optional 'platforms' tileset
+        // Detect optional 'platforms' tileset without ternary
         // Changed this
         let tsPlatforms = null;
         const hasPlatforms = map.tilesets.find(t => t.name === 'platforms');
-        if (hasPlatforms) 
+        if (hasPlatforms) {
             tsPlatforms = map.addTilesetImage('platforms', 'platforms');
-        
+        }
 
-        // Build the tileset array
+        // Build the tileset array without ternary
         // Changed this
         const tilesets = [];
         tilesets.push(tsWorld);
-        if (tsPlatforms) 
+        if (tsPlatforms) {
             tilesets.push(tsPlatforms);
-        
+        }
 
-        // Create layers only if they exist
+        // Create layers only if they exist (no ternaries)
         // Changed this
         let ground = null;
-        if (map.getLayerIndex('Ground') >= 0) 
+        if (map.getLayerIndex('Ground') >= 0) {
             ground = map.createLayer('Ground', tilesets, 0, 0);
-        
+        }
 
         // Changed this
         let platforms = null;
-        if (map.getLayerIndex('Platforms') >= 0) 
+        if (map.getLayerIndex('Platforms') >= 0) {
             platforms = map.createLayer('Platforms', tilesets, 0, 0);
-        
+        }
 
         // Optional decorative layer
         // Changed this
         let deco = null;
-        if (map.getLayerIndex('Deco') >= 0) 
+        if (map.getLayerIndex('Deco') >= 0) {
             deco = map.createLayer('Deco', tilesets, 0, 0);
-        
+        }
 
         // Collisions for any tile with property collides: true
         if (ground) ground.setCollisionByProperty({ collides: true });

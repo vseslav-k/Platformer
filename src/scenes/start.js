@@ -8,7 +8,8 @@ export default class Start extends Phaser.Scene {
 
     preload() {
         // TILE SETS
-        this.load.tilemapTiledJSON('level1', 'assets/sprites/test_level.tmj');
+        this.load.tilemapTiledJSON('StartEnemyLevel', 'assets/maps/lvlVee.tmj');
+        
         this.load.image('world_tileset', 'assets/sprites/world_tileset.png');
         this.load.image('platforms', 'assets/sprites/platforms.png'); 
 
@@ -24,7 +25,6 @@ export default class Start extends Phaser.Scene {
         this.load.audio('hurt', 'assets/sounds/hurt.wav');
         this.load.audio('jump', 'assets/sounds/jump.wav'); 
         this.load.audio('attack', 'assets/sounds/attack.mp3');
-        
 
         // ENEMIES
 

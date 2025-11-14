@@ -9,11 +9,13 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, 'knight', 0);
         scene.add.existing(this);
         scene.physics.add.existing(this);
-
+        this.speed = 150;
         this.setCollideWorldBounds(true);
         this.setMaxVelocity(300, 1000);
         this.setDragX(1200);
         this.body.setSize(18, 28).setOffset(7, 4); // should modify to be ~1 pixel tall and < 1 pixel wide
+        this.coyoteTime = 200;
+        this.coyoteTimeCounter = 0; //ms
 
         // CONTROLS
         this.keys = scene.input.keyboard.addKeys({
@@ -21,6 +23,9 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
             right: Phaser.Input.Keyboard.KeyCodes.D,
             jump: Phaser.Input.Keyboard.KeyCodes.SPACE
         });
+
+        this.body.setSize(10, 20, true);
+        this.body.setOffset(12, 8);
     }   
 
     // Ground collision
@@ -28,22 +33,24 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
         return this.body.blocked.down || this.body.touching.down; // taught in lecture
     }
 
-    update() {
-        const SPEED = 220;
-
+    preUpdate(time, delta) {
+        console.log(this.coyoteTimeCounter);
+        if(this.onGround){ this.coyoteTimeCounter = 0;}
+        else{this.coyoteTimeCounter += delta;}
+        
         // Horizontal
         if (this.keys.left.isDown) {
-            this.setAccelerationX(-SPEED * 5);
+            this.setAccelerationX(-this.speed * 5);
             this.setFlipX(true);
         } else if (this.keys.right.isDown) {
-            this.setAccelerationX(SPEED * 5);
+            this.setAccelerationX(this.speed * 5);
             this.setFlipX(false);
         } else {
             this.setAccelerationX(0);
         }
 
         // Jump (grounded only)
-        if (Phaser.Input.Keyboard.JustDown(this.keys.jump) && this.onGround) {
+        if (Phaser.Input.Keyboard.JustDown(this.keys.jump) && (this.onGround || this.coyoteTimeCounter < this.coyoteTime)) {
             this.setVelocityY(-520);
             this.scene.sound.play('jump', { volume: 0.5 }); // harmless if not preloaded
         }
