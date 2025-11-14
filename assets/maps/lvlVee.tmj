@@ -858,9 +858,19 @@
                  "name":"",
                  "properties":[
                         {
+                         "name":"len",
+                         "type":"int",
+                         "value":200
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"ladder"
+                        }, 
+                        {
+                         "name":"width",
+                         "type":"int",
+                         "value":20
                         }],
                  "rotation":0,
                  "type":"",
@@ -1104,14 +1114,19 @@
                  "name":"",
                  "properties":[
                         {
-                         "name":"length",
+                         "name":"len",
                          "type":"int",
-                         "value":0
+                         "value":120
                         }, 
                         {
                          "name":"type",
                          "type":"string",
-                         "value":"length"
+                         "value":"ladder"
+                        }, 
+                        {
+                         "name":"width",
+                         "type":"int",
+                         "value":16
                         }],
                  "rotation":0,
                  "type":"",

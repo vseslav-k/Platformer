@@ -42,7 +42,7 @@ export default class StartEnemyLevel extends Phaser.Scene {
         this.cameras.main.setZoom(1.5);
 
         this.ladder1 = new Ladder(733, 538, 111, 16, this.player);
-        this.ladder2 = new Ladder(93, 324, 500, 20, this.player);
+        this.ladder2 = new Ladder(93, 324, 200, 20, this.player);
 
     }
 
