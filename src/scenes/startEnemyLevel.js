@@ -3,6 +3,7 @@ import Knight from '../objects/knight.js';
 import Ladder from '../objects/ladder.js';
 import Coin from '../objects/coin.js';
 import Finish from '../objects/finish.js';
+import Slime from '../objects/slime.js';
 export default class StartEnemyLevel extends Phaser.Scene {
   constructor(){ super('StartEnemyLevel'); }
 
@@ -54,6 +55,7 @@ export default class StartEnemyLevel extends Phaser.Scene {
       this.add.text(16,8,"You won!",{fontSize:20,color:'#ffffffff'});
       this.add.text(16,30,`You gathered ${this.player.coinCount} / ${this.coinCount} coins!`,{fontSize:20,color:'#ffffffff'});
       this.add.text(16,52,`You died ${this.player.deathsCount} times!`,{fontSize:20,color:'#ffffffff'});
+      this.add.text(16,96,`Slimes Slain: ${this.player.slimesKilled}`,{fontSize:20,color:'#ffffffff'});
       this.add.text(16,74,`Time taken: ${(this.timeTaken / 1000).toFixed(2)} seconds`,{fontSize:20,color:'#ffffffff'});
       this.time.delayedCall(5000, () => {
         this.scene.start('Start');
@@ -80,17 +82,25 @@ export default class StartEnemyLevel extends Phaser.Scene {
         console.log(properties);
          switch(properties['type']){
            case "ladder":
-              console.log("ladder");
+              //console.log("ladder");
               this.updatables.push(new Ladder(obj.x, obj.y, properties["len"], properties["width"], this.player));
               break;
             case "coin":
-              console.log("coin");
+              //console.log("coin");
               new Coin(this, this.player, obj.x, obj.y);
               this.coinCount++;
               break;
             case "finish":
-              console.log("finish");
+              //console.log("finish");
               this.updatables.push(new Finish(this, this.player, obj.x, obj.y, properties["len"], properties["width"]));
+              break;
+            case "slime":
+              //console.log("slime");
+              this.enemies.push(new Slime(this, this.player, obj.x, obj.y, properties["minX"], properties["maxX"]));
+              break;
+            case "spawn":
+              //console.log("slime");
+              this.player.setPosition(obj.x, obj.y);
               break;
          }
      }

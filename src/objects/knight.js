@@ -22,6 +22,7 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
         this.coinCount = 0;
         this.deathsCount = 0;
         this.attacking = false;
+        this.slimesKilled = 0;
 
         // CONTROLS
         this.keys = scene.input.keyboard.addKeys({
