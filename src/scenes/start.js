@@ -8,9 +8,9 @@ export default class Start extends Phaser.Scene {
 
     preload() {
         // TILE SETS
-        this.load.tilemapTiledJSON('level1', 'assets/sprites/testmap.tmj');
+        this.load.tilemapTiledJSON('level1', 'assets/sprites/test_level.tmj');
         this.load.image('world_tileset', 'assets/sprites/world_tileset.png');
-        //this.load.image('platforms', 'assets/sprites/platforms.png'); 
+        this.load.image('platforms', 'assets/sprites/platforms.png'); 
 
         // PLAYER
         this.load.spritesheet('knight', 'assets/sprites/knight.png', {
@@ -18,13 +18,13 @@ export default class Start extends Phaser.Scene {
         });
 
         // SOUNDS (deal with later) 
-        /*
+        
         this.load.audio('coin', 'assets/sounds/coin.wav');
         this.load.audio('explosion', 'assets/sounds/explosion.wav');
         this.load.audio('hurt', 'assets/sounds/hurt.wav');
         this.load.audio('jump', 'assets/sounds/jump.wav'); 
         this.load.audio('attack', 'assets/sounds/attack.mp3');
-        */
+        
 
         // ENEMIES
 
