@@ -5,8 +5,10 @@
 // Attack: Left click (Vee you can decide this one since ur making the enemy level)
 
 export default class Knight extends Phaser.Physics.Arcade.Sprite {
+
     constructor(scene, x, y) {
         super(scene, x, y, 'knight', 0);
+        this.spawnPoint = { x: x, y: y };
         this.scene = scene;
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -28,6 +30,9 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
         this.body.setSize(10, 20, true);
         this.body.setOffset(12, 8);
         this.createDustEmitter();
+    }
+    die(){
+        this.setPosition(this.spawnPoint.x, this.spawnPoint.y);
     }
 
     createDustEmitter() {
@@ -74,7 +79,7 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
     jump(force, disableGravity = 50, sound = true) {
         if (!(this.onGround || this.coyoteTimeCounter < this.coyoteTime)) return;
         
-
+        this.coyoteTimeCounter = this.coyoteTime*2; // reset coyote time        
         this.body.setAllowGravity(false);
         this.scene.time.delayedCall(disableGravity, () => {this.body.setAllowGravity(true);}, [], this.scene);
         this.setVelocityY(-force);
@@ -91,7 +96,6 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
             this.setAccelerationX(-this.speed * 5);
             this.setFlipX(true);
             if(this.body.blocked.left && this.body.velocity.y >= 0){
-                console.log("WALL JUMP LEFT");
                 this.jump(222, 0, false);
             }
  
@@ -99,7 +103,6 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
             this.setAccelerationX(this.speed * 5);
             this.setFlipX(false);
             if(this.body.blocked.right && this.body.velocity.y >= 0){
-                console.log("WALL JUMP RIGHT");
                 this.jump(222, 0, false);
             }
      
