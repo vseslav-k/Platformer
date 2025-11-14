@@ -12,6 +12,7 @@ export default class Start extends Phaser.Scene {
         
         this.load.image('world_tileset', 'assets/sprites/world_tileset.png');
         this.load.image('platforms', 'assets/sprites/platforms.png'); 
+        this.load.image('dust', 'assets/sprites/dust.png'); 
 
         // PLAYER
         this.load.spritesheet('knight', 'assets/sprites/knight.png', {

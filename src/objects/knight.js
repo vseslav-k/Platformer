@@ -7,6 +7,7 @@
 export default class Knight extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, 'knight', 0);
+        this.scene = scene;
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.speed = 150;
@@ -26,39 +27,97 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
 
         this.body.setSize(10, 20, true);
         this.body.setOffset(12, 8);
-    }   
+        this.createDustEmitter();
+    }
 
+    createDustEmitter() {
+        this.dustEmitter = this.scene.add.particles(this.x, this.y, 'dust', {
+            quantity: 1,
+            speedX: { min: 0, max: 100 },
+            speedY: { min: 0, max: 0 },
+            lifespan: 600,
+            alpha: { start: 0.5, end: 0 },
+            scale: { start: 0.4, end: 0 },
+            gravityY: 50,
+            emitting: false
+        });
+
+        this.dustEmitter.setDepth(9999);
+    }
+
+    emitDustIfMoving() {
+        const vx = Math.abs(this.body.velocity.x);
+
+        // Only emit when grounded and moving fast enough
+        if (vx < 11 || !this.onGround) {
+            this.dustEmitter.emitting = false;
+            return;
+        }
+
+
+
+        // Position dust slightly behind the player
+        const offset = this.flipX ? 10 : -10;
+
+        if(!this.flipX) this.dustEmitter.setScale(-1, 1);
+        if(this.flipX) this.dustEmitter.setScale(1, 1);
+        this.dustEmitter.setPosition(this.x + offset, this.y + 12);
+
+        // Start emitting
+        this.dustEmitter.emitting = true;
+    }
     // Ground collision
     get onGround() {
         return this.body.blocked.down || this.body.touching.down; // taught in lecture
     }
 
+    jump(force, disableGravity = 50, sound = true) {
+        if (!(this.onGround || this.coyoteTimeCounter < this.coyoteTime)) return;
+        
+
+        this.body.setAllowGravity(false);
+        this.scene.time.delayedCall(disableGravity, () => {this.body.setAllowGravity(true);}, [], this.scene);
+        this.setVelocityY(-force);
+        if(sound) this.scene.sound.play('jump', { volume: 0.5 });
+    }
+
     preUpdate(time, delta) {
-        console.log(this.coyoteTimeCounter);
         if(this.onGround){ this.coyoteTimeCounter = 0;}
         else{this.coyoteTimeCounter += delta;}
         
         // Horizontal
         if (this.keys.left.isDown) {
+            
             this.setAccelerationX(-this.speed * 5);
             this.setFlipX(true);
+            if(this.body.blocked.left && this.body.velocity.y >= 0){
+                console.log("WALL JUMP LEFT");
+                this.jump(222, 0, false);
+            }
+ 
         } else if (this.keys.right.isDown) {
             this.setAccelerationX(this.speed * 5);
             this.setFlipX(false);
+            if(this.body.blocked.right && this.body.velocity.y >= 0){
+                console.log("WALL JUMP RIGHT");
+                this.jump(222, 0, false);
+            }
+     
         } else {
             this.setAccelerationX(0);
         }
 
         // Jump (grounded only)
-        if (Phaser.Input.Keyboard.JustDown(this.keys.jump) && (this.onGround || this.coyoteTimeCounter < this.coyoteTime)) {
-            this.setVelocityY(-520);
-            this.scene.sound.play('jump', { volume: 0.5 }); // harmless if not preloaded
+        if (Phaser.Input.Keyboard.JustDown(this.keys.jump)) {
+            this.jump(500, 0);
         }
-
+4
         // Anti wall-sticking when airborne and pushing into a wall
         if (!this.onGround && (this.body.blocked.left || this.body.blocked.right)) {
             this.setAccelerationX(0);
             this.setVelocityX(0);
         }
+
+        this.emitDustIfMoving();
     }
 }

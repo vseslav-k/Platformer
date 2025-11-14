@@ -6,6 +6,7 @@ import StartPortalLevel from './scenes/startPortalLevel.js';
 
 const config = {
     type: Phaser.AUTO,
+    roundPixels: false,
     width: 800,
     height: 800,
     backgroundColor: '#1a6cabff', // sky blue-ish
