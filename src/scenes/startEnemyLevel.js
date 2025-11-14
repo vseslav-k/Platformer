@@ -1,6 +1,7 @@
 import LevelBase from './levelBase.js';
 import Knight from '../objects/knight.js';
 import Ladder from '../objects/ladder.js';
+import Coin from '../objects/coin.js';
 export default class StartEnemyLevel extends Phaser.Scene {
   constructor(){ super('StartEnemyLevel'); }
 
@@ -14,7 +15,6 @@ export default class StartEnemyLevel extends Phaser.Scene {
         const map = this.make.tilemap({ key: "StartEnemyLevel" });
         const tileset = map.addTilesetImage("world_tileset", "world_tileset");
 
-        console.log(map);
 
         this.layers = {};
         // create layers
@@ -40,15 +40,48 @@ export default class StartEnemyLevel extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setZoom(1.5);
+        
+        this.updatables = [];
+        this.instantiateGameObjectsFromLayer(map);
 
-        this.ladder1 = new Ladder(733, 538, 111, 16, this.player);
-        this.ladder2 = new Ladder(93, 324, 200, 20, this.player);
+
+       
 
     }
 
+    serializeObjectProperties(propertiesArray){
+      if(!propertiesArray) return {};
+      console.log(propertiesArray);
+      const properties = {};
+      for(let prop of propertiesArray){
+        properties[prop.name] = prop.value;
+      }
+      return properties;
+    }
+
+    instantiateGameObjectsFromLayer(map){
+       const objects = map.getObjectLayer("gameObjects").objects;
+
+       for(let obj of objects){
+
+        let properties = this.serializeObjectProperties(obj.properties);
+     
+        console.log(properties);
+         switch(properties['type']){
+           case "ladder":
+             console.log("ladder");
+             this.updatables.push(new Ladder(obj.x, obj.y, properties["len"], properties["width"], this.player));
+             break;
+            case "coin":
+             console.log("coin");
+             new Coin(this, this.player, obj.x, obj.y);
+             break;
+         }
+     }
+   }
+
     update() {
-      this.ladder1.update();
-      this.ladder2.update();
+      this.updatables.forEach(updatable => updatable.update());
         
     }
   
