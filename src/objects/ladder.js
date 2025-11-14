@@ -9,15 +9,10 @@ export default class Ladder {
 
     update(){
         if(Math.abs(this.player.x - this.x) < this.width/2 &&
-           this.player.y - this.y < this.len && this.player.y - this.y > 0)
-            {
+           this.player.y - this.y < this.len && this.player.y - this.y > 0){
                 this.player.coyoteTimeCounter = 0; // reset coyote time
-                console.log("ON LADDER");
            }
-        else
-            {
-                console.log("OFF LADDER");
-           }
+
     
     }   
 }

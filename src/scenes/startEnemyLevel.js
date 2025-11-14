@@ -2,6 +2,7 @@ import LevelBase from './levelBase.js';
 import Knight from '../objects/knight.js';
 import Ladder from '../objects/ladder.js';
 import Coin from '../objects/coin.js';
+import Finish from '../objects/finish.js';
 export default class StartEnemyLevel extends Phaser.Scene {
   constructor(){ super('StartEnemyLevel'); }
 
@@ -11,7 +12,7 @@ export default class StartEnemyLevel extends Phaser.Scene {
   create() {
         this.player = new Knight(this, 64, 700);
 
-
+        this.coinCount = 0;
         const map = this.make.tilemap({ key: "StartEnemyLevel" });
         const tileset = map.addTilesetImage("world_tileset", "world_tileset");
 
@@ -48,6 +49,14 @@ export default class StartEnemyLevel extends Phaser.Scene {
        
 
     }
+    endGame(){
+      this.add.text(16,8,"You won!",{fontSize:20,color:'#ffffffff'});
+      this.add.text(16,30,`You gathered ${this.player.coinCount} / ${this.coinCount} coins!`,{fontSize:20,color:'#ffffffff'});
+      this.add.text(16,52,`You died ${this.player.deathsCount} times!`,{fontSize:20,color:'#ffffffff'});
+      this.time.delayedCall(5000, () => {
+        this.scene.start('Start');
+      }, [], this);
+    }
 
     serializeObjectProperties(propertiesArray){
       if(!propertiesArray) return {};
@@ -69,13 +78,18 @@ export default class StartEnemyLevel extends Phaser.Scene {
         console.log(properties);
          switch(properties['type']){
            case "ladder":
-             console.log("ladder");
-             this.updatables.push(new Ladder(obj.x, obj.y, properties["len"], properties["width"], this.player));
-             break;
+              console.log("ladder");
+              this.updatables.push(new Ladder(obj.x, obj.y, properties["len"], properties["width"], this.player));
+              break;
             case "coin":
-             console.log("coin");
-             new Coin(this, this.player, obj.x, obj.y);
-             break;
+              console.log("coin");
+              new Coin(this, this.player, obj.x, obj.y);
+              this.coinCount++;
+              break;
+            case "finish":
+              console.log("finish");
+              this.updatables.push(new Finish(this, this.player, obj.x, obj.y, properties["len"], properties["width"]));
+              break;
          }
      }
    }

@@ -2,6 +2,7 @@ export default class coin extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, player, x, y) {
         super(scene, x, y, 'coin', 0);
         this.scene = scene;
+        this.player = player;
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.setSize(8, 8).setOffset(4, 4); 
@@ -22,6 +23,7 @@ export default class coin extends Phaser.Physics.Arcade.Sprite {
 
 
     pickup(){
+        this.player.coinCount++;
         this.scene.sound.play('coin');    
         this.destroy();
     }

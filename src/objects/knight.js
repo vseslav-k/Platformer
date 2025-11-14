@@ -19,6 +19,8 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
         this.body.setSize(18, 28).setOffset(7, 4); // should modify to be ~1 pixel tall and < 1 pixel wide
         this.coyoteTime = 200;
         this.coyoteTimeCounter = 0; //ms
+        this.coinCount = 0;
+        this.deathsCount = 0;
 
         // CONTROLS
         this.keys = scene.input.keyboard.addKeys({
@@ -32,7 +34,8 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
         this.createDustEmitter();
     }
     die(){
-        this.setPosition(this.spawnPoint.x, this.spawnPoint.y);
+        this.deathsCount++;
+        //this.setPosition(this.spawnPoint.x, this.spawnPoint.y);
     }
 
     createDustEmitter() {
