@@ -12,6 +12,7 @@ export default class finish{
 
     endGame(){
         if(this.gameEnded) return;
+        this.scene.sound.play('power_up', { volume: 1 });
         this.gameEnded = true;
         console.log("You win!");
         this.scene.endGame();

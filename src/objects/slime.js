@@ -26,6 +26,7 @@ export default class Slime extends Phaser.Physics.Arcade.Sprite {
     }
 
     die(){
+        this.scene.sound.play('slimeDeath', { volume: 10 });
         this.player.slimesKilled++;
         this.destroy();
     }

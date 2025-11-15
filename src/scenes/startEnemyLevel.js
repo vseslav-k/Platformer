@@ -61,7 +61,9 @@ export default class StartEnemyLevel extends Phaser.Scene {
         this.scene.start('Start');
       }, [], this);
     }
+    
 
+    //Tiled object properties are stored in an array for some stupid reason so we need to convert them to an object first
     serializeObjectProperties(propertiesArray){
       if(!propertiesArray) return {};
       console.log(propertiesArray);
@@ -76,7 +78,7 @@ export default class StartEnemyLevel extends Phaser.Scene {
        const objects = map.getObjectLayer("gameObjects").objects;
 
        for(let obj of objects){
-
+        //Tiled object properties are stored in an array for some stupid reason so we need to convert them to an object first
         let properties = this.serializeObjectProperties(obj.properties);
      
         console.log(properties);
@@ -101,6 +103,7 @@ export default class StartEnemyLevel extends Phaser.Scene {
             case "spawn":
               //console.log("slime");
               this.player.setPosition(obj.x, obj.y);
+              this.player.spawnPoint = {x: obj.x, y: obj.y};
               break;
          }
      }

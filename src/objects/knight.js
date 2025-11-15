@@ -37,6 +37,7 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
         this.createDustEmitter();
     }
     die(){
+        this.scene.sound.play('hurt');
         this.deathsCount++;
         this.setPosition(this.spawnPoint.x, this.spawnPoint.y);
     }
@@ -53,10 +54,26 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
             emitting: false
         });
 
+        this.dustEmitterJump = this.scene.add.particles(this.x, this.y, 'dust', {
+            quantity: 1,
+            speedX: { min: -55, max: 55 },
+            speedY: { min: 0, max: 55 },
+            lifespan: 600,
+            alpha: { start: 0.5, end: 0 },
+            scale: { start: 0.4, end: 0 },
+            gravityY: 50,
+            emitting: false
+        });
+
         this.dustEmitter.setDepth(9999);
+        this.dustEmitterJump.setDepth(9999);
     }
 
+    
+
     emitDustIfMoving() {
+        
+
         const vx = Math.abs(this.body.velocity.x);
 
         // Only emit when grounded and moving fast enough
@@ -82,8 +99,15 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
         return this.body.blocked.down || this.body.touching.down; // taught in lecture
     }
 
-    jump(force, disableGravity = 50, sound = true) {
+    jump(force, disableGravity = 0, sound = true) {
+
+
+        
         if (!(this.onGround || this.coyoteTimeCounter < this.coyoteTime)) return;
+
+        this.dustEmitterJump.emitting = true;
+        this.dustEmitterJump.setPosition(this.x, this.y + 12);
+        this.scene.time.delayedCall(300, () => {this.dustEmitterJump.emitting = false;}, [], this.scene);
         
         this.coyoteTimeCounter = this.coyoteTime*2; // reset coyote time        
         this.body.setAllowGravity(false);

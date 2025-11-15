@@ -1,0 +1,62 @@
+
+Code details:
+
+    If you want to use enemies in your own level you have to create an array named enemies on it where all the enemies are stored
+
+    Ladder and finish classes have their own update methods. The your scene should run them every update
+
+    If you want to use my finish class then your scene should have an endGame() method
+
+
+
+
+
+Documenting Vee's level here(you can copy paste my system into your own code. Its super conveniet):
+
+
+    Tiled/Phaser interractions:
+
+        Level should have 4 tile layers and 1 object layer
+
+        tile layers should be called exatctly these:
+
+            groud
+            background
+            decorations
+            danger
+
+
+        only ground and danger have colision
+        danger kills player on colision
+
+
+        the object layer should be named exatctly
+
+            gameObjects
+
+        All items on it should contain a string "type" property
+
+        type can be one of these:
+
+            "ladder"
+            "slime"
+            "spawn"
+            "coin"
+            "finish"
+
+
+            ladder should  have int len and width parameters
+
+                len is how far down does the ladder extend
+                
+                width is how close does the player have to be to it (horizontally) to use it (usally 16-20 is a good value)
+
+            slime has to have a int minX and a maxX value
+
+                The slime will move back and forth between minX and maxX.
+                     WARNING!!! if the slime cannot reach minX or maxX it WILL GET STUCK!!!
+
+            spawn has no other data
+
+            finish has to have a len and width which signify how close the player has to be to it to end the game(vertically and horizontally)
+

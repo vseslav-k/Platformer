@@ -33,6 +33,8 @@ export default class Start extends Phaser.Scene {
         this.load.audio('hurt', 'assets/sounds/hurt.wav');
         this.load.audio('jump', 'assets/sounds/jump.wav'); 
         this.load.audio('attack', 'assets/sounds/attack.mp3');
+        this.load.audio('slimeDeath', 'assets/sounds/slimeDeath.wav');
+        this.load.audio('power_up', 'assets/sounds/power_up.wav');
 
         // ENEMIES
 

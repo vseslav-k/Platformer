@@ -6,6 +6,7 @@ export default class slash extends Phaser.Physics.Arcade.Sprite {
         this.player = player;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
+        scene.sound.play('attack');  
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -15,12 +16,14 @@ export default class slash extends Phaser.Physics.Arcade.Sprite {
         //this.body.setOffset(35, 8);
         this.setScale(0.6);
 
-        enemies.forEach(enemy => {
-            scene.physics.add.collider(enemy, this, () => {
-              enemy.die();
-            }); 
+        if(enemies){
+            enemies.forEach(enemy => {
+                scene.physics.add.collider(enemy, this, () => {
+                enemy.die();
+                }); 
 
-        });
+            });
+        }
 
         this.anims.create({
             key: 'attack',
