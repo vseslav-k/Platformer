@@ -1,5 +1,6 @@
 // main.js
 
+//import Phaser from '../phaser.js'; // DONT UNCOMMENT THIS IS WHY IT WAS BLACK SCREEN FOR SO LONG
 import Start from './scenes/start.js';
 import StartEnemyLevel from './scenes/startEnemyLevel.js';
 import StartPortalLevel from './scenes/startPortalLevel.js';
@@ -9,16 +10,16 @@ const config = {
     roundPixels: false,
     width: 800,
     height: 800,
-    backgroundColor: '#1a6cabff', // sky blue-ish
+    backgroundColor: '#8bb7d9ff', 
     physics: {
         default: 'arcade',
         arcade: {
         gravity: { y: 1500 },
-        debug: true // set as true for now
+        debug: true 
         }
     },
-    pixelArt: true, // should this be true or false idk
-    scene: [Start, StartEnemyLevel, StartPortalLevel]
+    pixelArt: true,
+    scene: [Start, StartEnemyLevel, StartPortalLevel] 
 };
 
 new Phaser.Game(config);

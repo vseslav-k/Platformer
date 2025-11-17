@@ -1,4 +1,6 @@
-import LevelBase from './levelBase.js';
+// startEnemyLevel.js
+
+//import LevelBase from './levelBase.js';
 import Knight from '../objects/knight.js';
 import Ladder from '../objects/ladder.js';
 import Coin from '../objects/coin.js';
@@ -6,6 +8,7 @@ import Finish from '../objects/finish.js';
 import Slime from '../objects/slime.js';
 export default class StartEnemyLevel extends Phaser.Scene {
   constructor(){ super('StartEnemyLevel'); }
+
 
   preload() {
   }
@@ -21,7 +24,7 @@ export default class StartEnemyLevel extends Phaser.Scene {
         this.layers = {};
         // create layers
         this.layers["background"] = map.createLayer("background", tileset, 0, 0);
-        this.layers["ground"]     = map.createLayer("ground",     tileset, 0, 0);
+        this.layers["ground"] = map.createLayer("ground", tileset, 0, 0);
         this.layers["decorations"]= map.createLayer("decorations",tileset, 0, 0);
         this.layers["danger"] = map.createLayer("danger", tileset, 0, 0);
         
@@ -114,5 +117,5 @@ export default class StartEnemyLevel extends Phaser.Scene {
       this.timeTaken += delta;
         
     }
-  
+
 }

@@ -20,7 +20,7 @@ Documenting Vee's level here(you can copy paste my system into your own code. It
 
         tile layers should be called exatctly these:
 
-            groud
+            ground
             background
             decorations
             danger

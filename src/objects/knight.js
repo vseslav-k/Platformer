@@ -145,7 +145,7 @@ export default class Knight extends Phaser.Physics.Arcade.Sprite {
         if (Phaser.Input.Keyboard.JustDown(this.keys.jump)) {
             this.jump(500, 0);
         }
-4
+
         // Anti wall-sticking when airborne and pushing into a wall
         if (!this.onGround && (this.body.blocked.left || this.body.blocked.right)) {
             this.setAccelerationX(0);
