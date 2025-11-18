@@ -38,6 +38,8 @@ export default class Start extends Phaser.Scene {
         this.load.audio('slimeDeath', 'assets/sounds/slimeDeath.wav');
         this.load.audio('power_up', 'assets/sounds/power_up.wav');
         this.load.audio('teleport', 'assets/sounds/teleport.wav');
+        this.load.audio('win', 'assets/sounds/win.wav');
+        this.load.audio('mysteryMusic', 'assets/music/mystery_music.mp3'); // original music composed by kevin :D
 
         // ENEMIES
 
@@ -48,10 +50,12 @@ export default class Start extends Phaser.Scene {
         this.load.image('portal_green_white', 'assets/sprites/greenwhite.png'); 
         this.load.image('portal_blue_black', 'assets/sprites/blueblack.png');
         this.load.image('portal_blue_white', 'assets/sprites/bluewhite.png');
+        this.load.image('flag', 'assets/sprites/flag.png'); // finish line for portal level
 
     }
 
     create() {
+        // menu text
         this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x06767).setOrigin(0);
         this.add.text(480, 200, 'Select level',
         { fontSize: 24, color: '#fff' }).setOrigin(0.5);
@@ -62,6 +66,14 @@ export default class Start extends Phaser.Scene {
         this.add.text(480, 400, '  -=|Controls|=- \n[A][D] Left-Right\n[Space] Jump\n[J] Attack',
         { fontSize: 16, color: '#ffffffff', align: 'left' }).setOrigin(0.5);
 
+        // music start
+        let mus = this.sound.get('mysteryMusic');
+        if (!mus) {
+            mus = this.sound.add('mysteryMusic', {loop: true});
+            mus.play();
+        }
+
+        // start level
         this.input.keyboard.on('keydown-ONE', () => this.scene.start('StartEnemyLevel'));
         this.input.keyboard.on('keydown-TWO', () => this.scene.start('StartPortalLevel'));
     }

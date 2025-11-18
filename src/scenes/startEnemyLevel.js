@@ -50,7 +50,15 @@ export default class StartEnemyLevel extends Phaser.Scene {
         this.enemies = [];
         this.instantiateGameObjectsFromLayer(map);
 
-
+        // FINISH LINE (kevin put this here)
+        const flag = this.add.sprite(160, 145, 'flag').setScale(2);
+        this.physics.add.existing(flag, true);
+        this.physics.add.overlap(this.player, flag, () => {
+            if (this.gameEnded) return; // avoid double trigger spam
+            this.gameEnded = true;
+            this.sound.play('win');
+            this.endGame();
+        }, null, this);
        
 
     }

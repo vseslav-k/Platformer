@@ -18,9 +18,10 @@ export default class finish{
         this.scene.endGame();
     }
 
-    update(){
-        if(Math.abs(this.player.x - this.x) < this.width/2 && Math.abs(this.player.y - this.y) < this.len/2){
+    update() { // Kevin note: I changed how both of our levels end. the player touches a flag which triggers this.endGame() so that i dont have to have a headache messing with coordinates and switch-cases for both our levels
+        /*
+        if (Math.abs(this.player.x - this.x) < this.width/2 && Math.abs(this.player.y - this.y) < this.len/2){
             this.endGame();
-        }
+        }*/
     }
 }
