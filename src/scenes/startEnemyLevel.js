@@ -68,7 +68,7 @@ export default class StartEnemyLevel extends Phaser.Scene {
       this.add.text(16,52,`You died ${this.player.deathsCount} times!`,{fontSize:20,color:'#ffffffff'});
       this.add.text(16,96,`Slimes Slain: ${this.player.slimesKilled}`,{fontSize:20,color:'#ffffffff'});
       this.add.text(16,74,`Time taken: ${(this.timeTaken / 1000).toFixed(2)} seconds`,{fontSize:20,color:'#ffffffff'});
-      this.time.delayedCall(5000, () => {
+      this.time.delayedCall(5000, () => {this.gameEnded = false;
         this.scene.start('Start');
       }, [], this);
     }
